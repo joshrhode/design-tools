@@ -1,4 +1,3 @@
-
 /*===============================================================
     
     Josh Rhode — http://kult.house
@@ -7,8 +6,8 @@
     Photoshop CC
     ———
     
-    This script allows you to select all text layers in a PSD
-    that match each other based on their similarities.
+    This script will automatically select all text layers
+    in a PSD that match each other based on their similarities.
 
     1.  Select a text layer anywhere in your PSD
     2.  Run this script
@@ -40,8 +39,8 @@
     around, and I honestly can't believe it still
     works (for me).
 
-
 ===============================================================*/
+
 
 var activeLayer,
     doc;
