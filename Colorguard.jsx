@@ -21,8 +21,9 @@
     	Example: Want to replace all yellow colors with blue,
     	and all red with green? Simple.
 	
-		var colorTable = [['ffff00', '0000ff'],
-						['ff0000', '00ff00']];
+		Find / replace:
+		[['ffff00', '0000ff'],
+		['ff0000', '00ff00']];
 
     2.  Run this script!
 
@@ -39,8 +40,8 @@
 ===============================================================
 					FIND	->	REPLACE
 ===============================================================*/
-var colorTable = [['ffffff',	'f6f7fb'],
-				  ['000000',	'40526a']];
+var colorTable =	[['ffffff',	'f6f7fb'],
+					['000000',	'40526a']];
 
 var doc;
 
