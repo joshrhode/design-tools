@@ -24,7 +24,7 @@
 		[{find:'ffff00', replace:'0000ff'}],
 		[{find:'ff0000', replace:'00ff00'}];
 
-    2.  Run this script!
+    2.  Run this script, select a folder of PSDs, and go!
 
     INSTALL
     ———
@@ -43,56 +43,62 @@ var colorTable =
 	{find:'000000', replace:'40526a'}];
 
 var doc;
+var numProcessed = 0;
 
 function main() {  
 
-	if (app.documents.length == 0) {
-		alert('Please open a document before continuing.');
-		return;
-	}
+	 if (app.documents.length > 0) {
+        alert ('Close all open documents before running this script.');
+        return;
+    }
+    
+    var sourceFolder = Folder.selectDialog ('Select the folder of PSDs you want to update.', Folder.myDocuments);
+    var files = sourceFolder.getFiles('*.psd');
+       
+    for (var i = 0; i < files.length; i++) {
+        var f = files[i];
+        if (f instanceof Folder)
+            continue;
+
+        doc = app.open (f);
+        colorizeLayers();
+    }
+
+    alert('Total shape colors updated: ' + numProcessed + ' in ' + files.length + ' files');
 	
-	doc = app.activeDocument;
-	
-	progressWindow = createProgressWindow('Coloring...');
-	progressStep = Math.round(100 / doc.layers.length);
-	progressWindow.show();
-
-	colorizeLayers();
-
-	progressWindow.close();
-
 }
 
 function colorizeLayers() {
-	
-
-	var numProcessed = 0;
-
+		
 	// get number of layers;  
 	var ref = new ActionReference();  
 	ref.putEnumerated( charIDToTypeID('Dcmn'), charIDToTypeID('Ordn'), charIDToTypeID('Trgt') );  
 	var applicationDesc = executeActionGet(ref);  
 	var totalLayers = applicationDesc.getInteger(stringIDToTypeID('numberOfLayers'));  
+
+	//start a progress window
+	progressWindow = createProgressWindow('Coloring...');
+	progressStep = Math.round(100 / totalLayers);
+	progressWindow.show();
 	
 	// process the layers;  
 	for(var i = 0; i <= totalLayers; i++) {  
 		try {  
+			var ref = new ActionReference();  
+			ref.putIndex( charIDToTypeID('Lyr '), i);
+			var layerDesc = executeActionGet(ref);  
 
-		var ref = new ActionReference();  
-		ref.putIndex( charIDToTypeID('Lyr '), i);
-		var layerDesc = executeActionGet(ref);  
+			var layerKind = layerDesc.getString(stringIDToTypeID('layerKind'));  
 
-		var layerKind = layerDesc.getString(stringIDToTypeID('layerKind'));  
-
-		if(layerKind == 4)
-			numProcessed += inspectLayer(ref, i);
-		  
-		progressWindow.bar.value = (100 / (progressStep / i));
+			if(layerKind == 4)
+				numProcessed += inspectLayer(ref, i);
+			  
+			progressWindow.bar.value = (100 / (progressStep / i));
 
 		} catch(e) {}  
 	}
 
-	alert('Total shape colors updated: ' + numProcessed);
+	progressWindow.close();
 
 }
 
