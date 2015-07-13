@@ -46,7 +46,7 @@ function main () {
         return;
     }
     
-    var sourceFolder = Folder.selectDialog ('Please choose the location of the source image files.', Folder.myDocuments);
+    var sourceFolder = Folder.selectDialog ('Select the folder of PSDs you want to update.', Folder.myDocuments);
     var files = sourceFolder.getFiles('*.psd');
        
     for (var i = 0; i < files.length; i++) {
