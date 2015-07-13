@@ -6,9 +6,10 @@
     Photoshop CC
     ———
     
-    This script will automatically update the fill colors
-    of all shape/vector layers in your PSD based on
-    a table you can easily modify in the script.
+    Add a list of colors you want to find and replace.
+    This script will open every PSD in a folder and then
+    automatically update the fill color of every vector/shape
+    inside of it.
 
     Why? I hacked this script together to help with a large
     rebranding project. We have hundreds of PSDs and needed
@@ -18,11 +19,10 @@
     1.  Inside of this script, add the list of colors you want
     	to find and replace inside of the 'colorTable' array. 
     	
-    	Example: Want to replace all yellow colors with blue,
-    	and all red with green? Simple.
+    	Example: Your client's brand color used to be blue.
+    	Now it's red. You have 250 PSDs. Hoo boy.
 	
-		[{find:'ffff00', replace:'0000ff'}],
-		[{find:'ff0000', replace:'00ff00'}];
+		[{find:'0000ff', replace:'ff000'}];
 
     2.  Run this script, select a folder of PSDs, and go!
 
@@ -41,6 +41,7 @@ var colorTable =
 
 	[{find:'ffffff', replace:'f6f7fb'},
 	{find:'000000', replace:'40526a'}];
+	//add/remove as many color replacements as you want!
 
 var doc;
 var numProcessed = 0;
