@@ -21,9 +21,8 @@
     	Example: Want to replace all yellow colors with blue,
     	and all red with green? Simple.
 	
-		Find / replace:
-		[['ffff00', '0000ff'],
-		['ff0000', '00ff00']];
+		[{find:'ffff00', replace:'0000ff'}],
+		[{find:'ff0000', replace:'00ff00'}];
 
     2.  Run this script!
 
@@ -36,12 +35,12 @@
     Run the script by hitting File -> Scripts
     in the Photoshop menu.
 
-
-===============================================================
-					FIND	->	REPLACE
 ===============================================================*/
-var colorTable =	[['ffffff',	'f6f7fb'],
-					['000000',	'40526a']];
+
+var colorTable =
+
+	[{find:'ffffff', replace:'f6f7fb'},
+	{find:'000000', replace:'40526a'}];
 
 var doc;
 
@@ -102,8 +101,8 @@ function colorizeLayers() {
 function inspectLayer(ref, refIndex) {
 	var currentColor = getFillColor(ref).rgb.hexValue;
 	for(var i = 0; i < colorTable.length; ++i) {
-		if(currentColor == colorTable[i][0].toUpperCase()) {
-			setFillColor(refIndex, colorTable[i][1]);
+		if(currentColor == colorTable[i].find.toUpperCase()) {
+			setFillColor(refIndex, colorTable[i].replace);
 			return 1;
 		}
 	}
