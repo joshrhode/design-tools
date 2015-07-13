@@ -92,10 +92,10 @@ function selectSimilarLayers() {
     
     // process the text layers;  
     var theLayers = new Array;  
-    for(var m = 0; m <= totalLayers; m++) {  
+    for(var i = 0; i <= totalLayers; i++) {  
         try {  
             var ref = new ActionReference();  
-            ref.putIndex( charIDToTypeID( 'Lyr ' ), m);
+            ref.putIndex( charIDToTypeID( 'Lyr ' ), i);
             var layerDesc = executeActionGet(ref);  
             var layerSet = typeIDToStringID(layerDesc.getEnumerationValue(stringIDToTypeID('layerSection')));  
             var isBackground = layerDesc.getBoolean(stringIDToTypeID('background'));  
@@ -121,6 +121,9 @@ function selectSimilarLayers() {
                     addLayerToSelection(ref);
                 }
             }
+
+            progressWindow.bar.value = (100 / (progressStep / i));
+            
         } catch(e) {}  
     }      
 }
