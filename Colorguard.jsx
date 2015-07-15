@@ -53,11 +53,17 @@
 
 ===============================================================*/
 
+
 var colorTable =
 
 	[{find:'ffffff', replace:'f6f7fb'},
 	{find:'000000', replace:'40526a'}];
 	//add/remove as many color replacements as you want!
+
+
+/*===============================================================
+	The rest of the code. Leave it alone.
+===============================================================*/
 
 var doc;
 var numProcessed = 0;
