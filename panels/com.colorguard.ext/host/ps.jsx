@@ -5,83 +5,37 @@
     Colorguard
     Photoshop CC
     ———
-    
-    Add a list of colors you want to find and replace.
-    This script will automatically update the fill colors
-    of every vector/shape and text layer in your PSDs.
-
-    Why? I hacked this script together to help with a large
-    rebranding project. We have hundreds of PSDs and needed
-    a fast way to update the color palette across
-    all of them instantly.
-
-
-	HOW IT WORKS
-	———
-	
-	If you have an active PSD open, this script
-	will only target your active PSD.
-
-	If you close all of your documents, the script
-	will let you select a folder, then it will
-	automatically open and update every PSD inside of it.
-
-	It won't save the files - that's up to you :)
-
-
-	HOW TO USE IT
-	———
-	
-    1.  Down in this script, edit the list of colors you want
-    	to find and replace inside of the 'colorTable' array. 
-    	
-    	Example: Your client's brand color used to be blue.
-    	They want it to be red. You have 250 PSDs. No problem:
-		[{find:'0000ff', replace:'ff000'}];
-
-    2.  Run this script!
-
-
-	INSTALL
-	———
-
-    Add the script to the \Presets\Scripts\ folder
-    within your Photoshop CC folder.
-
-    Run the script by hitting File -> Scripts
-    in the Photoshop menu.
-
 ===============================================================*/
 
 
-var colorTable =
-
-	[{find:'ffffff', replace:'f6f7fb'},
-	{find:'000000', replace:'40526a'}];
-	//add/remove as many color replacements as you want!
-
-
-/*===============================================================
-	The rest of the code. Leave it alone.
-===============================================================*/
+var colorTable = [];
 
 var doc;
 var numProcessed = 0;
 
-function main() {  
+function addColorToTable(f,r) {
+	var findColor = new SolidColor,
+	replaceColor = new SolidColor;
 
-	setupColorObjects();
+	findColor.rgb.hexValue = f;
+	replaceColor.rgb.hexValue = r;
 
-	 if (app.documents.length > 0) {
-        	    
-	    doc = app.activeDocument;
-	    activeLayer = doc.activeLayer;
+	colorTable.push({find:findColor, replace:replaceColor});
+}
 
-	    colorizeLayers();
-	    
-	    alert('Total shape colors updated: ' + numProcessed);
+function ColorGuard(mode) {  
 
-    } else if (app.documents.length == 0) {
+
+	doc = app.activeDocument;
+
+	if (mode == 1 && app.documents.length > 0) {
+        applyForegroundColors();
+
+	} else if (mode == 2 && app.documents.length > 0) {
+        replaceLayerColors();
+	    alert('Total colors found and replaced: ' + numProcessed);
+	
+	} else if (mode == 3) {
     
 	    var sourceFolder = Folder.selectDialog ('Select the folder of PSDs you want to update.', Folder.myDocuments);
 	    	if(sourceFolder == null) return;
@@ -95,32 +49,17 @@ function main() {
 	            continue;
 
 	        doc = app.open (f);
-	        colorizeLayers();
+	        replaceLayerColors();
 	    }
 
-	    alert('Total shape colors updated: ' + numProcessed + ' in ' + files.length + ' files');
+	    alert('Total colors found and replaced: ' + numProcessed + ' in ' + files.length + ' files');
 
 	}
 	
 }
 
-function setupColorObjects() {
-	for(var i = 0; i < colorTable.length; ++i) {
-		
-		var findColor = new SolidColor,
-			replaceColor = new SolidColor;
-		
-		findColor.rgb.hexValue = colorTable[i].find.toUpperCase();  
-		colorTable[i].find = findColor;
 
-		replaceColor.rgb.hexValue = colorTable[i].replace.toUpperCase();  
-		colorTable[i].replace = replaceColor;
-
-
-	}
-}
-
-function colorizeLayers() {
+function replaceLayerColors() {
 		
 	// get number of layers;  
 	var ref = new ActionReference();  
@@ -128,11 +67,6 @@ function colorizeLayers() {
 	var descApplication = executeActionGet(ref);  
 	var totalLayers = descApplication.getInteger(stringIDToTypeID('numberOfLayers'));  
 
-	//start a progress window
-	progressWindow = createProgressWindow('Coloring...');
-	progressStep = Math.round(100 / totalLayers);
-	progressWindow.show();
-	
 	// process the layers;  
 	for(var i = 0; i <= totalLayers; i++) {  
 		try {  
@@ -143,20 +77,55 @@ function colorizeLayers() {
 			var layerKind = descLayer.getString(stringIDToTypeID('layerKind'));  
 
 			if(layerKind == 3 || layerKind == 4)
-				numProcessed += inspectLayer(layerKind, descLayer, i);
-			  
-			progressWindow.bar.value = (100 / (progressStep / i));
+				numProcessed += colorizeLayerByTable(layerKind, descLayer, i);
 
 		} catch(e) {}  
 	}
 
-	progressWindow.close();
+}
 
+function applyForegroundColors() {
+
+	 var refLayers = new ActionReference();
+     refLayers.putEnumerated( charIDToTypeID('Dcmn'), charIDToTypeID('Ordn'), charIDToTypeID('Trgt') );
+     var descLayers = executeActionGet(refLayers);
+     if( descLayers.hasKey( stringIDToTypeID( 'targetLayers' ) ) ){
+          descLayers = descLayers.getList( stringIDToTypeID( 'targetLayers' ));
+          var c = descLayers.count;
+          for(var i=0;i<c;i++){
+
+          	   	var index = descLayers.getReference(i).getIndex();
+          	   	var ref = new ActionReference();  
+				ref.putIndex( charIDToTypeID('Lyr '), index);
+				var descLayer = executeActionGet(ref);  
+				var layerKind = descLayer.getString(stringIDToTypeID('layerKind'));  
+
+				if(layerKind == 3 || layerKind == 4)
+					colorizeLayerByForeground(layerKind, index);
+
+          }
+     }
+
+}
+
+//inspect the shape/text layer and color it accordingly
+function colorizeLayerByForeground(kind, refIndex) {
+	var currentColor;
+	//it's a shape layer!
+	if(kind == 4) {
+		setFillColor(refIndex, app.foregroundColor);
+		return 1;
+	//it's a text layer!
+	} else if (kind == 3) {
+		setTextColor(refIndex, app.foregroundColor);
+		return 1;
+	}
+	return 0;
 }
 
 
 //inspect the shape/text layer, compare its color, and if it's a match, update it
-function inspectLayer(kind, descLayer, refIndex) {
+function colorizeLayerByTable(kind, descLayer, refIndex) {
 	var currentColor;
 	//it's a shape layer!
 	if(kind == 4) {
@@ -251,14 +220,3 @@ function getFillColor(descLayer){
 	return parseColor(color);
 
 }
-
-// progress bar
-function createProgressWindow(title, message, min, max) {
-	var win;
-	win = new Window('palette', title);
-	win.bar = win.add('progressbar', undefined, min, max);
-	win.bar.preferredSize = [200, 20];
-	return win;
-};
-
-main();

@@ -1,0 +1,69 @@
+<!doctype html>
+
+<html>
+<head>
+	<meta charset="utf-8">
+	<script src="./ext.js"></script>
+
+	<link id="ppstyle" rel="stylesheet" type="text/css" href="./style.css">
+	<title>Friendly Fire by Josh Rhode</title>
+	<style type="text/css">
+		body {
+			text-align: center;
+			font-size: 10px;
+			font-family: Helvetica, Arial, sans-serif;
+			background: #c8cacc;
+			color: #121214;
+			width: 160px;
+			-moz-user-select: none;
+  			-webkit-user-select: none;
+		 	-ms-user-select: none;
+		}
+		.header {
+			text-transform: uppercase;
+			font-size: 10px;
+			padding-bottom: 10px;
+			border-bottom: 1px solid #666666;
+			margin-bottom: 10px;
+		}
+		.address {
+			color: #666666;
+			text-transform: none;
+		}
+		.button {
+			display: block;
+			width: 100%;
+			height: 80px;
+			cursor: pointer;
+			border: 1px solid #9a9aa1;
+			border-radius: 2px;
+			line-height: 80px;
+			margin-bottom: 5px;
+			font-size: 24px;
+			-moz-user-select: none;
+  			-webkit-user-select: none;
+		 	-ms-user-select: none;
+		}
+		.button:hover {
+			border-color: #121216;
+		}
+	</style>
+
+</head>
+
+<body onLoad="onLoaded()">
+
+	<div class="header">
+		Friendly Fire<br>
+		<span class="address">twitter.com/kulthouse</span>
+	</div>
+	
+	<div id="btn-fire" class="button">Fire</div>
+	Finds all matching font/size layers
+	
+	<script src="./lib/CSInterface-4.0.0.js"></script>
+  	<script src="./js/main.js"></script>
+
+</body>
+
+</html>

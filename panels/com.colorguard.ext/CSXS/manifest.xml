@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ExtensionManifest Version="4.0" ExtensionBundleId="Colorguard" ExtensionBundleVersion="1.0.0"
+		ExtensionBundleName="Colorguard" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Author>
+	    <![CDATA[Josh Rhode]]>
+  	</Author>
+  	<Abstract href="http://twitter.com/kulthouse" />
+	<ExtensionList>
+		<Extension Id="com.Colorguard.ext" Version="1.0" />
+	</ExtensionList>
+	<ExecutionEnvironment>
+		<HostList>
+			<Host Name="PHSP" Version="[15.0,16.9]" />
+			<Host Name="PHXS" Version="[15.0,16.9]" />
+		</HostList>
+		<LocaleList>
+			<Locale Code="All" />
+		</LocaleList>
+		<RequiredRuntimeList>
+			<RequiredRuntime Name="CSXS" Version="4.0" />
+		</RequiredRuntimeList>
+	</ExecutionEnvironment>
+	<DispatchInfoList>
+		<Extension Id="com.Colorguard.ext">
+			<DispatchInfo >
+				<Resources>
+					<MainPath>./index.html</MainPath>
+					<ScriptPath>./host/ps.jsx</ScriptPath>
+				</Resources>
+				<Lifecycle>
+					<AutoVisible>true</AutoVisible>
+				</Lifecycle>
+				<UI>
+					<Type>Panel</Type>
+					<Menu>Colorguard</Menu>
+					<Geometry>
+						<Size>
+							<Height>400</Height>
+							<Width>200</Width>
+						</Size>
+					</Geometry>
+					<Icons>
+			            <Icon Type="Normal">./icons/Normal.png</Icon>
+			            <Icon Type="RollOver">./icons/Rollover.png</Icon>
+			            <Icon Type="Disabled">./icons/Normal.png</Icon>
+			            <Icon Type="DarkNormal">./icons/DarkNormal.png</Icon>
+			            <Icon Type="DarkRollOver">./icons/DarkRollover.png</Icon>
+			        </Icons>
+				</UI>
+			</DispatchInfo>
+
+		</Extension>
+	</DispatchInfoList>
+</ExtensionManifest>

@@ -1,0 +1,154 @@
+<!doctype html>
+
+<html>
+<head>
+	<meta charset="utf-8">
+	<script src="./ext.js"></script>
+
+	<link id="ppstyle" rel="stylesheet" type="text/css" href="./style.css">
+	<title>Colorguard by Josh Rhode</title>
+	<style type="text/css">
+		body {
+			text-align: center;
+			font-size: 10px;
+			font-family: Helvetica, Arial, sans-serif;
+			background: #c8cacc;
+			color: #121214;
+			width: 160px;
+			-moz-user-select: none;
+  			-webkit-user-select: none;
+		 	-ms-user-select: none;
+		}
+		.header {
+			text-transform: uppercase;
+			font-size: 10px;
+			font-weight: bold;
+			line-height: 14px;
+		}
+		.divider {
+			padding-bottom: 10px;
+			border-bottom: 1px solid #9a9a9b;
+			margin-bottom: 10px;
+		}
+		.address {
+			color: #666666;
+			text-transform: none;
+			font-weight: normal;
+		}
+		.list {
+			margin-bottom: 20px;
+		}
+		.button {
+			display: block;
+			width: 100%;
+			height: 30px;
+			cursor: pointer;
+			border: 2px solid #9a9aa1;
+			border-radius: 4px;
+			line-height: 30px;
+		    margin: 5px 0px;
+			-moz-user-select: none;
+  			-webkit-user-select: none;
+		 	-ms-user-select: none;
+		}
+		.button:hover {
+			border-color: #121216;
+		}
+		.col.left {
+			width: 49%;
+			float: left;
+		}
+		.col.right {
+			width: 49%;
+			float: right;
+		}
+		.row {
+			clear: both;
+			width: 100%;
+		}
+		.title {
+			padding-bottom: 20px;
+		}
+		input {
+			box-sizing: border-box;
+			font-size: 10px;
+			text-transform: uppercase;
+			width: 100%;
+			margin: 0px 0px 2px 0px;
+			padding: 0;
+			border: 0;
+			outline: 0;
+			display: block;
+			text-align: center;
+		}
+		.actions {
+			
+		}
+	</style>
+
+</head>
+
+<body onLoad="onLoaded()">
+
+	<div class="header divider">
+		Colorguard<br>
+		<span class="address">twitter.com/kulthouse</span>
+	</div>
+	<div class="actions divider">
+		SELECTED LAYERS<br>
+		<div class="row">
+			<div id="btn-foreground" class="button">Apply foreground color</div>
+		</div>
+	</div>
+	<div class="title">
+		<div class="row">
+			<div class="col left">Find hex</div>
+			<div class="col right">Replace hex</div>
+		</div>
+	</div>
+	<div class="list">
+		<div class="row">
+		  <div class="col left"><input class="input-find" type="text" maxlength="6" value="000000" /></div>
+		  <div class="col right"><input class="input-replace" type="text" maxlength="6" value="121218" /></div>
+		</div>
+		<div class="row">
+		  <div class="col left"><input class="input-find" type="text" maxlength="6" /></div>
+		  <div class="col right"><input class="input-replace" type="text" maxlength="6" /></div>
+		</div>
+		<div class="row">
+		  <div class="col left"><input class="input-find" type="text" maxlength="6" /></div>
+		  <div class="col right"><input class="input-replace" type="text" maxlength="6" /></div>
+		</div>
+		<div class="row">
+		  <div class="col left"><input class="input-find" type="text" maxlength="6" /></div>
+		  <div class="col right"><input class="input-replace" type="text" maxlength="6" /></div>
+		</div>
+		<div class="row">
+		  <div class="col left"><input class="input-find" type="text" maxlength="6" /></div>
+		  <div class="col right"><input class="input-replace" type="text" maxlength="6" /></div>
+		</div>
+		<div class="row">
+		  <div class="col left"><input class="input-find" type="text" maxlength="6" /></div>
+		  <div class="col right"><input class="input-replace" type="text" maxlength="6" /></div>
+		</div>
+		<div class="row">
+		  <div class="col left"><input class="input-find" type="text" maxlength="6" /></div>
+		  <div class="col right"><input class="input-replace" type="text" maxlength="6" /></div>
+		</div>
+		<div class="row">
+		  <div class="col left"><input class="input-find" type="text" maxlength="6" /></div>
+		  <div class="col right"><input class="input-replace" type="text" maxlength="6" /></div>
+		</div>
+	</div>
+	<div class="actions">
+		<div class="row">
+			<div id="btn-apply" class="button">Apply now</div>
+			<div id="btn-folder" class="button">Apply to a folder</div>
+		</div>
+	</div>
+	<script src="./lib/CSInterface-4.0.0.js"></script>
+  	<script src="./js/main.js"></script>
+
+</body>
+
+</html>
